@@ -17,10 +17,10 @@ figure; % open a new figure window
 %       markers larger by using plot(..., 'rx', 'MarkerSize', 10);
 
 plot(x, y, 'rx', 'MarkerSize', 10);
-xlabel('population');
-ylabel('revenue');
-legend('revenue vs population');
-title('My plot');
+xlabel('Population of City in 10,000s');
+ylabel('Profit in $10,000s');
+legend('profit vs population');
+title('Profit per city population');
 
 
 
