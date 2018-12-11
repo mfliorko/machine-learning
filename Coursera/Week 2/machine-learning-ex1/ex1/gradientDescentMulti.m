@@ -17,20 +17,26 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-
-
-
-
-
-
-
-
+    temp_theta = theta - alpha/m*X'*(X * theta - y);
+    theta = temp_theta;
 
 
     % ============================================================
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCostMulti(X, y, theta);
+ 
+    % Adjusting Alpha will decrease  number of iterations
+    %if iter >=2
+    %    diffs = (J_history(iter-1) - J_history(iter));
+    %    if diffs < 0.00001
+    %        fprintf(['Cost function minimum %f is reached at iteration: %.0f\n'], J_history(iter), iter);
+    %        fprintf(['Cost function difference from previous iteration is %f\n'], diffs);
+    %        J_history(iter:length(J_history)) = J_history(iter);
+    %        break;
+    %    end
+    %    alpha = alpha * (1 + diffs/J_history(iter));
+    %end
 
 end
 
