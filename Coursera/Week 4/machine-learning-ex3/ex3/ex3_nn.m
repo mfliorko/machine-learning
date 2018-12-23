@@ -73,22 +73,23 @@ pause;
 %  Randomly permute examples
 rp = randperm(m);
 
+fprintf('\nDisplaying Example Images\n');
+
 for i = 1:m
     % Display 
-    fprintf('\nDisplaying Example Image\n');
     displayData(X(rp(i), :));
 
     pred = predict(Theta1, Theta2, X(rp(i),:));
-    fprintf('\nNeural Network Prediction: %d (digit %d). Label: %d\n', pred, mod(pred, 10), y(rp(i)));
-
+ 
     if pred != y(rp(i))
         fprintf('INACCURATE PREDICTION\n')
-    end
+        fprintf('\nNeural Network Prediction: %d (digit %d). Label: %d\n', pred, mod(pred, 10), y(rp(i)));
     
-    % Pause with quit option
-    s = input('Paused - press enter to continue, q to exit:','s');
-    if s == 'q'
-      break
+        % Pause with quit option
+        s = input('Paused - press enter to continue, q to exit:','s');
+        if s == 'q'
+        break
+        end
     end
 end
 
