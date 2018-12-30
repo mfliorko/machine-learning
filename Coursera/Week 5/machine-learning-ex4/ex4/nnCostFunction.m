@@ -62,23 +62,47 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+A1 = [ones(m, 1) X];
+z2 = A1 * Theta1';
+A2 = [ones(size(z2), 1) sigmoid(z2)];
+z3 = A2 * Theta2';
+A3 = sigmoid(z3);
+H = A3;
 
+yv = [1:num_labels] == y;
+ttheta1 = Theta1(:,2:end);
+ttheta2 = Theta2(:,2:end);
+#fprintf('Size of X is [%d, %d]\n', size(X));
+#fprintf('Size of A1 is [%d, %d]\n', size(A1));
+#fprintf('Size of A2 is [%d, %d]\n', size(A2));
+#fprintf('Size of A3 is [%d, %d]\n', size(A3));
+#fprintf('Size of Yv is [%d, %d]\n', size(yv));
+#fprintf('Size of ttheta1 is [%d, %d]\n', size(ttheta1));
+#fprintf('Size of ttheta2 is [%d, %d]\n', size(ttheta2));
 
+J1 = -1/m * sum(sum(yv .* log(H) + (1 - yv) .* log(1 - H)));
+J2 = lambda / (2 * m) * (sum(sum(ttheta1 .* ttheta1)) + sum(sum(ttheta2 .* ttheta2)));
 
+J = J1 + J2;
 
+#fprintf('Size of J1 is [%d, %d]\n', size(J1));
+#fprintf('Size of J2 is [%d, %d]\n', size(J2));
 
+delta3 = A3 - yv; # [5000 x 10]
+delta2 = delta3 * ttheta2 .* sigmoidGradient(z2); # [5000 x 25]
+#fprintf('Size of delta3 is [%d, %d]\n', size(delta3));
+#fprintf('Size of delta2 is [%d, %d]\n', size(delta2));
 
+Theta2_grad = delta3' * A2; # [10 x 25] 
+Theta1_grad = delta2' * A1; # [25 x 400]
+#fprintf('Size of Theta2_grad is [%d, %d]\n', size(Theta2_grad));
+#fprintf('Size of Theta1_grad is [%d, %d]\n', size(Theta1_grad));
 
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
 
-
-
-
-
-
-
-
-
-
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + lambda / m * Theta1(:,2:end);
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + lambda / m * Theta2(:,2:end);
 
 % -------------------------------------------------------------
 
