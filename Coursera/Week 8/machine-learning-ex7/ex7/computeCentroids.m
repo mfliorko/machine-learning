@@ -26,12 +26,13 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for i = 1:K
+    idx_i = (idx == i);
+    if sum(idx_i) > 0
+        subX = X(idx_i, :);
+        centroids(i,:) = mean(subX);
+    endif
+endfor
 
 % =============================================================
 

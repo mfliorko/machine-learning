@@ -13,12 +13,21 @@ centroids = zeros(K, size(X, 2));
 %               the dataset X
 %
 
+m = size(X, 1);
+idx = zeros(K, 1);
 
+% randidx = randperm(size(X, 1));
+% centroids = X(randidx(1:K), :);
 
+for i = 1:K
+    new_idx = randi(m, 1, 1);
+    while new_idx == 0 || any(idx == new_idx) > 0
+        new_idx = randi(m, 1, 1);
+    endwhile
+    idx(i) = new_idx;
+endfor
 
-
-
-
+centroids = X(idx,:);
 
 % =============================================================
 
